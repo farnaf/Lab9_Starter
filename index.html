@@ -87,7 +87,14 @@
     </section>
   </main>
 
+  <script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>
   <script>
+    window.TrackJS && TrackJS.install({ 
+      token: "331d5d658e4e4e89841bafa89cce9cb4"
+      // for more configuration options, see https://docs.trackjs.com
+    });
+    TrackJS.track('Testing TrackJS!');
+
     let form = document.querySelector('form');
     form.addEventListener('submit', e => {
       e.preventDefault();
@@ -100,8 +107,107 @@
 
     let errorBtns = Array.from(document.querySelectorAll('#error-btns > button'));
 
-    // Start your code here
-    // You may move this JS to another file if you wish
+    // ------------- Step 2 - Adding Buttons for Console Testing --------------
+    errorBtns[0].addEventListener('click', e => {
+      console.log("Console Log Demo");
+    });
+    errorBtns[1].addEventListener('click', e => {
+      console.error("Console Error Demo");
+    });
+    errorBtns[2].addEventListener('click', e => {
+      console.count("Console Count Demo");
+    });
+    errorBtns[3].addEventListener('click', e => {
+      console.warn("Console Warn Demo");
+    });
+    errorBtns[4].addEventListener('click', e => {
+      let num1 = 12; let num2 = -12; let msg = "num1 is expected to be equal to num2";
+      console.assert(num1 == num2, {num1, num2, msg});
+    });
+    errorBtns[5].addEventListener('click', e => {
+      console.clear();
+    });
+    errorBtns[6].addEventListener('click', e => {
+      console.dir(document.head);
+    });
+    errorBtns[7].addEventListener('click', e => {
+      console.dirxml(document);
+    });
+    errorBtns[8].addEventListener('click', e => {
+      console.group();
+    });
+    errorBtns[9].addEventListener('click', e => {
+      console.groupEnd();
+    });
+    errorBtns[10].addEventListener('click', e => {
+      console.table([
+          { student: 'Farnia Nafarifard',
+            year: 'Junior',
+            major: 'Computer Engineering' },
+          { student: 'Parvin Soudmand',
+            year: 'Senior',
+            major: 'Anthropological Archaeology' }
+      ]);
+    });
+    errorBtns[11].addEventListener('click', e => {
+      console.time("Timer Demo");
+    });
+    errorBtns[12].addEventListener('click', e => {
+      console.timeEnd("Timer Demo");
+    });
+    errorBtns[13].addEventListener('click', e => {
+      const func1 = () => { func2(); };
+      const func2 = () => { func3(); };
+      const func3 = () => { console.trace() };
+      func1();
+    });
+    errorBtns[14].addEventListener('click', e => {
+      const PI = 3.14159265359;
+      PI = 3.14;
+    });
+
+    // ---------------------- Step 3 - Trying Try/Catch -----------------------
+    try {
+      let x = y + 1;
+    } catch (error) {
+      throw error;
+    } finally {
+      console.log("Exiting out of the try/catch");
+    }
+
+    // ------------------ Step 4 - Throw and Custom Errors --------------------
+    class ValidationCheckError extends Error {
+      constructor(message) {
+        super(message);
+        this.name = "ValidationCheckError";
+      }
+    }
+
+    function readProf(json) {
+      let prof = JSON.parse(json);
+      console.log(prof);
+      if (!prof.name) {
+        throw new ValidationCheckError("No field: name");
+      }
+      if (!prof.dept) {
+        throw new ValidationCheckError("No field: department");
+      }
+      return prof;
+    }
+
+    try {
+      var prof = readProf('{ "name": "Thomas Powell" }');
+    } catch (err) {
+      if (err instanceof ValidationCheckError) {
+        alert("Invalid data: " + err.message);
+      } else {
+        throw err;
+      }
+    }
+
+    // ------- Step 5 - The Global Error handler and 3rd Party Tracking -------
+
+
   </script>
 </body>
 
