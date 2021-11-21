@@ -206,7 +206,8 @@
 
     // ------- Step 5 - The Global Error handler and 3rd Party Tracking -------
     if (window.onerror) {
-      window.onerror = function(){console.log("Handling the error");}
+      let newErrorMsg = console.log("Handling the error");
+      window.onerror = newErrorMsg;
     }
 
   </script>
